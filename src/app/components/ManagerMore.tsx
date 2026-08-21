@@ -1,12 +1,21 @@
-import { Users, Download, Settings, LogOut, ChevronRight } from "lucide-react";
+import { User, Bell, Users, Download, Settings, LogOut, ChevronRight } from "lucide-react";
 import { TopBar } from "./TopBar";
+import type { TopBarCallbacks } from "../App";
 
 interface ManagerMoreProps {
   onLogout: () => void;
+  topBar: TopBarCallbacks;
 }
 
-export function ManagerMore({ onLogout }: ManagerMoreProps) {
+export function ManagerMore({ onLogout, topBar }: ManagerMoreProps) {
   const menuSections = [
+    {
+      title: "Conta",
+      items: [
+        { icon: User, label: "Perfil", action: topBar.onProfileClick },
+        { icon: Bell, label: "Notificações", action: topBar.onNotificationsClick },
+      ],
+    },
     {
       title: "Gestão",
       items: [
@@ -25,7 +34,7 @@ export function ManagerMore({ onLogout }: ManagerMoreProps) {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <TopBar title="Mais" />
+      <TopBar title="Mais" {...topBar} />
 
       <div className="px-6 py-6 space-y-6">
         {menuSections.map((section, sectionIndex) => (
